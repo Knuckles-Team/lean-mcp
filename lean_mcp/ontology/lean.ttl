@@ -1,0 +1,52 @@
+@prefix : <https://knuckles-team.github.io/ontology/connector/lean#> .
+@prefix core: <https://knuckles-team.github.io/ontology/core#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+# Lean classes. Every class extends a core class of the parent ontology
+# through rdfs:subClassOf, and every property extends a core property through
+# rdfs:subPropertyOf. The pack redeclares no core term and never imports core.
+
+:Declaration a owl:Class ;
+    rdfs:subClassOf core:Concept ;
+    rdfs:label "Lean Declaration" ;
+    rdfs:comment "A named declaration of a Lean project: the formal counterpart of an informal claim." .
+
+:Theorem a owl:Class ;
+    rdfs:subClassOf :Declaration ;
+    rdfs:label "Lean Theorem" ;
+    rdfs:comment "A declaration whose type is a proposition and whose value is its proof." .
+
+:Definition a owl:Class ;
+    rdfs:subClassOf :Declaration ;
+    rdfs:label "Lean Definition" ;
+    rdfs:comment "A declaration that names a value or a function." .
+
+:Structure a owl:Class ;
+    rdfs:subClassOf :Declaration ;
+    rdfs:label "Lean Structure" ;
+    rdfs:comment "A declaration of a record type with named fields." .
+
+:Instance a owl:Class ;
+    rdfs:subClassOf :Declaration ;
+    rdfs:label "Lean Instance" ;
+    rdfs:comment "A definition registered for type class resolution." .
+
+:LeanModule a owl:Class ;
+    rdfs:subClassOf core:Module ;
+    rdfs:label "Lean Module" ;
+    rdfs:comment "One Lean source module of a project." .
+
+:leanDependsOn a owl:ObjectProperty ;
+    rdfs:subPropertyOf core:dependsOn ;
+    rdfs:label "Lean depends on" ;
+    rdfs:comment "Links a Lean declaration to a declaration its type or value uses." ;
+    rdfs:domain :Declaration ;
+    rdfs:range :Declaration .
+
+:declaredIn a owl:ObjectProperty ;
+    rdfs:subPropertyOf core:partOf ;
+    rdfs:label "declared in" ;
+    rdfs:comment "Links a Lean declaration to the module that declares it." ;
+    rdfs:domain :Declaration ;
+    rdfs:range :LeanModule .
