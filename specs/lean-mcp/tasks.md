@@ -1,0 +1,6 @@
+# CONN-LEAN-MCP — Tasks
+
+- [ ] T001 [US1] CONN-LEAN-MCP-R001 Check
+- [ ] T002 [US1] CONN-LEAN-MCP-R002 Extract
+- [ ] T003 [US1] CONN-LEAN-MCP-R003 Pack
+- [ ] T004 [US1] CONN-LEAN-MCP-R004 Surfaces

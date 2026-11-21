@@ -1,0 +1,6 @@
+# Spec status is computed at read time, never committed.
+specs/*/status.json
+
+# Lean build output of the fixture projects
+.lake/
+build/
