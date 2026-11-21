@@ -39,7 +39,15 @@ CONTRACTS = (
             ToolStep(
                 "lean_check",
                 params=("project_dir", "file", "declaration", "build"),
-                result=_RECEIPT,
+                result=(
+                    "checker_id",
+                    "toolchain_version",
+                    "declaration",
+                    "artifact_digest",
+                    "axioms",
+                    "has_sorry",
+                    "verdict",
+                ),
                 refusals=(
                     *_COMMON,
                     Refusal(
