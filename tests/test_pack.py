@@ -61,7 +61,9 @@ def test_every_class_reaches_both_parent_catalogs():
         if not line.lstrip().startswith("#")
     )
     parents: dict[str, set[str]] = {}
-    for name, body in re.findall(r"^:(\w+) a owl:Class ;(.*?) \.\n", text, re.M | re.S):
+    for name, body in re.findall(
+        r"^:(\w+) a owl:Class ;(.*?) \.\n", text, re.MULTILINE | re.DOTALL
+    ):
         clause = re.search(r"rdfs:subClassOf\s+([^;]+)", body)
         parents[name] = (
             set(re.findall(r"[\w]*:\w+", clause.group(1))) if clause else set()
