@@ -11,3 +11,4 @@
 | T-007 | `CONN-LEAN-MCP-R002` | `tests/test_extract.py::test_a_failed_build_is_refused` |
 | T-008 | `CONN-LEAN-MCP-R003` | `tests/test_pack.py::test_pack_extends_core_and_redeclares_nothing` |
 | T-009 | `CONN-LEAN-MCP-R004` | `tests/test_surface.py::test_every_tool_has_a_contract_a_prompt_and_a_skill` |
+| T-010 | `CONN-LEAN-MCP-R003` | `tests/test_pack.py::test_every_class_reaches_both_parent_catalogs` |

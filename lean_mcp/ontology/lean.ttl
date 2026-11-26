@@ -1,14 +1,18 @@
 @prefix : <https://knuckles-team.github.io/ontology/connector/lean#> .
 @prefix core: <https://knuckles-team.github.io/ontology/core#> .
+@prefix kg: <http://knuckles.team/kg#> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 
 # Lean classes. Every class extends a core class of the parent ontology
 # through rdfs:subClassOf, and every property extends a core property through
 # rdfs:subPropertyOf. The pack redeclares no core term and never imports core.
+# Each root class names the parent catalog of an engine that serves the
+# organization base (core:) and of one that still serves the shared kg:
+# namespace, so onboarding does not refuse the pack as ONTOLOGY_ORPHAN on either.
 
 :Declaration a owl:Class ;
-    rdfs:subClassOf core:Concept ;
+    rdfs:subClassOf core:Concept, kg:Concept ;
     rdfs:label "Lean Declaration" ;
     rdfs:comment "A named declaration of a Lean project: the formal counterpart of an informal claim." .
 
@@ -33,7 +37,7 @@
     rdfs:comment "A definition registered for type class resolution." .
 
 :LeanModule a owl:Class ;
-    rdfs:subClassOf core:Module ;
+    rdfs:subClassOf core:Module, kg:Module ;
     rdfs:label "Lean Module" ;
     rdfs:comment "One Lean source module of a project." .
 
