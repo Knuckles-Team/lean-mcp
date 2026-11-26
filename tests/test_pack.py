@@ -56,12 +56,16 @@ def test_every_class_reaches_both_parent_catalogs():
     shared namespace finds ``kg:``. Each root names both, so every class reaches both.
     """
     text = "\n".join(
-        line for line in PACK.read_text().splitlines() if not line.lstrip().startswith("#")
+        line
+        for line in PACK.read_text().splitlines()
+        if not line.lstrip().startswith("#")
     )
     parents: dict[str, set[str]] = {}
     for name, body in re.findall(r"^:(\w+) a owl:Class ;(.*?) \.\n", text, re.M | re.S):
         clause = re.search(r"rdfs:subClassOf\s+([^;]+)", body)
-        parents[name] = set(re.findall(r"[\w]*:\w+", clause.group(1))) if clause else set()
+        parents[name] = (
+            set(re.findall(r"[\w]*:\w+", clause.group(1))) if clause else set()
+        )
     assert len(parents) == 6
 
     def reaches(cls: str, prefix: str) -> bool:
