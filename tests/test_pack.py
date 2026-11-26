@@ -46,3 +46,36 @@ def test_pack_extends_core_and_redeclares_nothing():
         assert parent in body, name
     assert "core:Concept" in text and "core:Module" in text
     assert "core:dependsOn" in text and "core:partOf" in text
+
+
+# spec: CONN-LEAN-MCP-R003
+def test_every_class_reaches_both_parent_catalogs():
+    """Arbora onboarding refuses a class with no path to the engine's parent catalog.
+
+    An engine serving the organization base finds ``core:``; one still serving the
+    shared namespace finds ``kg:``. Each root names both, so every class reaches both.
+    """
+    text = "\n".join(
+        line for line in PACK.read_text().splitlines() if not line.lstrip().startswith("#")
+    )
+    parents: dict[str, set[str]] = {}
+    for name, body in re.findall(r"^:(\w+) a owl:Class ;(.*?) \.\n", text, re.M | re.S):
+        clause = re.search(r"rdfs:subClassOf\s+([^;]+)", body)
+        parents[name] = set(re.findall(r"[\w]*:\w+", clause.group(1))) if clause else set()
+    assert len(parents) == 6
+
+    def reaches(cls: str, prefix: str) -> bool:
+        stack, seen = [cls], set()
+        while stack:
+            node = stack.pop()
+            for parent in parents.get(node, ()):
+                if parent.startswith(prefix):
+                    return True
+                if parent.startswith(":") and parent[1:] not in seen:
+                    seen.add(parent[1:])
+                    stack.append(parent[1:])
+        return False
+
+    for cls in parents:
+        assert reaches(cls, "core:"), cls
+        assert reaches(cls, "kg:"), cls
